@@ -1,15 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { reactive, watch } from 'vue'
 import { defaultConfig } from '../config/defaultConfig'
 import { Config, isConfig } from '../config/config'
 import { id } from '../utils/strings'
 import { XMarkIcon } from '@heroicons/vue/24/solid'
 
 const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
-const config = ref<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
+const config = reactive<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
+
+watch(config, (newConfig) => {
+  localStorage.setItem('config', JSON.stringify(newConfig))
+})
 
 const removeGame = (title: string) => {
-  config.value.games = config.value.games.filter(game => game.title !== title)
+  config.games = config.games.filter(game => game.title !== title)
 }
 </script>
 

@@ -1,6 +1,8 @@
-import { shallowMount } from '@vue/test-utils'
+import { VueWrapper, shallowMount } from '@vue/test-utils'
 import Games from './Games.vue'
-import { it, expect, describe, beforeEach } from 'vitest'
+import { it, expect, describe, beforeEach, beforeAll } from 'vitest'
+
+let wrapper: VueWrapper
 
 it('shows all game titles', () => {
   const text = shallowMount(Games).text()
@@ -15,12 +17,19 @@ it('shows all game titles', () => {
 })
 
 describe('click remove icon on game', () => {
-  it('removes the game from the list', async () => {
-    const wrapper = shallowMount(Games)
+  beforeAll(async () => {
+    wrapper = shallowMount(Games)
     await wrapper.find('#remove-wordle').trigger('click')
+  })
 
+  it('removes the game from the list', async () => {
     const text = wrapper.text()
     expect(text).not.toContain('Wordle')
+  })
+
+  it('removes the item from localStorage', () => {
+    const config = JSON.parse(localStorage.getItem('config') || '{}')
+    expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
   })
 })
 
