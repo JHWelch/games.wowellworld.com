@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { games } from '../config/defaultConfig'
+import { ref } from 'vue'
+import { defaultConfig } from '../config/defaultConfig'
+import { Config, isConfig } from '../config/config'
+
+const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
+const config = ref<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
+
 </script>
 
 <template>
   <ul class="flex flex-col flex-grow max-w-sm p-4 space-y-4 text-white">
     <li
-      v-for="game in games"
+      v-for="game in config.games"
       :key="game.title"
     >
       <a
