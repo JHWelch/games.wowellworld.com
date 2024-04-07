@@ -14,6 +14,16 @@ it('shows all game titles', () => {
   expect(text).toContain('Spotle')
 })
 
+describe('click remove icon on game', () => {
+  it('removes the game from the list', async () => {
+    const wrapper = shallowMount(Games)
+    await wrapper.find('#remove-wordle').trigger('click')
+
+    const text = wrapper.text()
+    expect(text).not.toContain('Wordle')
+  })
+})
+
 describe('games have been customized', () => {
   beforeEach(() => {
     localStorage.setItem('config', JSON.stringify({
