@@ -8,6 +8,9 @@ import { XMarkIcon } from '@heroicons/vue/24/solid'
 const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
 const config = ref<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
 
+const removeGame = (title: string) => {
+  config.value.games = config.value.games.filter(game => game.title !== title)
+}
 </script>
 
 <template>
@@ -27,7 +30,7 @@ const config = ref<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
 
         <button
           :id="'remove-' + id(game.title)"
-          @click.stop.prevent="config.games = config.games.filter(g => g.title !== game.title)"
+          @click.stop.prevent="removeGame(game.title)"
         >
           <XMarkIcon class="w-4 h-4" />
         </button>
