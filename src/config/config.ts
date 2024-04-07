@@ -7,7 +7,7 @@ export type Config = {
   games: Game[]
 }
 
-export const isGame = (game: unknown): game is Game =>  game !== null
+export const isGame = (game: unknown): game is Game => game !== null
   && typeof game === 'object'
   && 'title' in game
   && 'url' in game
@@ -15,7 +15,7 @@ export const isGame = (game: unknown): game is Game =>  game !== null
   && typeof game.url === 'string'
 
 export const isConfig = (config: unknown): config is Config => config !== null
-    && typeof config === 'object'
-    && 'games' in config
-    && Array.isArray(config.games)
-    && config.games.every(isGame)
+  && typeof config === 'object'
+  && 'games' in config
+  && Array.isArray(config.games)
+  && config.games.every(isGame)
