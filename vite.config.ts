@@ -8,7 +8,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        theme_color: '#a855f7',
+        theme_color: '#171717',
       },
     }),
     vue(),
