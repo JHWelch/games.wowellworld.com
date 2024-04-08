@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Game } from '../config/config'
 import { id } from '../utils/strings'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/solid'
+import { Bars3Icon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/solid'
 
 defineProps<{
+  complete: boolean
   edit: boolean
   game: Game
   removeGame: (title: string) => void
@@ -22,6 +23,16 @@ defineProps<{
           v-if="edit"
           class="w-4 h-4 handle"
         />
+
+        <div
+          v-else
+          class="flex items-center justify-center w-6 h-6 bg-purple-300 border-2 rounded-md"
+        >
+          <CheckIcon
+            v-if="complete"
+            class="w-6 h-6 text-purple-900"
+          />
+        </div>
 
         <span>
           {{ game.title }}
