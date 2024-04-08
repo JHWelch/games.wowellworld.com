@@ -12,6 +12,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.19",
     "@heroicons/vue": "^2.1.3",
     "@vueuse/core": "^10.9.0",
     "@vueuse/integrations": "^10.9.0",
