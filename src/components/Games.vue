@@ -19,6 +19,10 @@ const removeGame = (title: string) => {
   config.games = config.games.filter(game => game.title !== title)
 }
 
+const resetGames = () => {
+  config.games = defaultConfig.games
+}
+
 const today = JSON.parse(localStorage.getItem('today') ?? '{}')
 
 const completed = reactive(
@@ -43,18 +47,28 @@ useSortable(gamesList, config.games, {
 </script>
 
 <template>
-  <ul
-    ref="gamesList"
-    class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-4 text-white"
-  >
-    <Game
-      v-for="game in config.games"
-      :key="game.title"
-      :game="game"
-      :complete="completed.has(game.title)"
-      :edit="edit"
-      :remove-game="removeGame"
-      :complete-game="completeGame"
-    />
-  </ul>
+  <div class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-4 text-white">
+    <ul
+      ref="gamesList"
+      class="flex flex-col flex-grow w-full space-y-4"
+    >
+      <Game
+        v-for="game in config.games"
+        :key="game.title"
+        :game="game"
+        :complete="completed.has(game.title)"
+        :edit="edit"
+        :remove-game="removeGame"
+        :complete-game="completeGame"
+      />
+    </ul>
+
+    <button
+      v-if="edit"
+      class="w-full p-2 text-white bg-red-500 rounded-md"
+      @click="resetGames"
+    >
+      Reset Games to Default
+    </button>
+  </div>
 </template>

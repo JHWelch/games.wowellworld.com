@@ -1,6 +1,7 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Games from './Games.vue'
 import { it, expect, describe, beforeEach, beforeAll } from 'vitest'
+import { defaultConfig } from '../config/defaultConfig'
 
 let wrapper: VueWrapper
 
@@ -33,6 +34,34 @@ describe('edit enabled', () => {
 
   it('displays sort handles', () => {
     expect(wrapper.findAll('.handle').length).toBe(7)
+  })
+
+  it('displays reset button', () => {
+    expect(wrapper.text()).toContain('Reset Games to Default')
+  })
+})
+
+describe('edit disabled', () => {
+  beforeAll(() => {
+    wrapper = mount(Games, { props: { edit: false } })
+  })
+
+  it('does not display remove icon on each game', () => {
+    expect(wrapper.find('#remove-wordle').exists()).toBe(false)
+    expect(wrapper.find('#remove-connections').exists()).toBe(false)
+    expect(wrapper.find('#remove-mini-crossword').exists()).toBe(false)
+    expect(wrapper.find('#remove-crossword').exists()).toBe(false)
+    expect(wrapper.find('#remove-cinematrix').exists()).toBe(false)
+    expect(wrapper.find('#remove-framed').exists()).toBe(false)
+    expect(wrapper.find('#remove-spotle').exists()).toBe(false)
+  })
+
+  it('does not display sort handles', () => {
+    expect(wrapper.findAll('.handle').length).toBe(0)
+  })
+
+  it('does not display reset button', () => {
+    expect(wrapper.text()).not.toContain('Reset Games to Default')
   })
 })
 
@@ -71,26 +100,6 @@ describe('completeGame', () => {
   })
 })
 
-describe('edit disabled', () => {
-  beforeAll(() => {
-    wrapper = mount(Games, { props: { edit: false } })
-  })
-
-  it('does not display remove icon on each game', () => {
-    expect(wrapper.find('#remove-wordle').exists()).toBe(false)
-    expect(wrapper.find('#remove-connections').exists()).toBe(false)
-    expect(wrapper.find('#remove-mini-crossword').exists()).toBe(false)
-    expect(wrapper.find('#remove-crossword').exists()).toBe(false)
-    expect(wrapper.find('#remove-cinematrix').exists()).toBe(false)
-    expect(wrapper.find('#remove-framed').exists()).toBe(false)
-    expect(wrapper.find('#remove-spotle').exists()).toBe(false)
-  })
-
-  it('does not display sort handles', () => {
-    expect(wrapper.findAll('.handle').length).toBe(0)
-  })
-})
-
 describe('games have been customized', () => {
   beforeEach(() => {
     localStorage.setItem('config', JSON.stringify({
@@ -117,6 +126,15 @@ describe('games have been customized', () => {
     expect(text).not.toContain('Cinematrix')
     expect(text).not.toContain('Framed')
     expect(text).not.toContain('Spotle')
+  })
+
+  it('can reset the games to the default list', async () => {
+    const wrapper = mount(Games, { props: { edit: true } })
+    await wrapper.vm.resetGames()
+
+    const config = JSON.parse(localStorage.getItem('config') || '{}')
+    expect(config.games).toEqual(defaultConfig.games)
+    expect(wrapper.vm.config.games).toEqual(defaultConfig.games)
   })
 })
 
