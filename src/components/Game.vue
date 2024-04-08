@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Game } from '../config/config'
 import { id } from '../utils/strings'
-import { Bars3Icon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/solid'
+import { Bars3Icon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 defineProps<{
   complete: boolean
@@ -18,10 +18,14 @@ defineProps<{
     <a
       :href="game.url"
       target="blank"
-      class="flex justify-between w-full h-full p-4 align-middle border cursor-pointer hover:underline"
+      class="flex justify-between w-full h-full p-4 align-middle border cursor-pointer"
+      :class="{
+        'text-purple-950 border-purple-950 line-through': complete,
+        'border-purple-200 hover:underline': !complete,
+      }"
       @click="completeGame(game.title)"
     >
-      <div class="flex items-center space-x-2">
+      <div class="flex items-center space-x-4">
         <Bars3Icon
           v-if="edit"
           class="w-4 h-4 handle"
@@ -29,12 +33,16 @@ defineProps<{
 
         <button
           v-else
-          class="flex items-center justify-center w-6 h-6 bg-purple-300 border-2 rounded-md"
+          class="flex items-center justify-center w-6 h-6 border-2 rounded-md"
+          :class="{
+            'border-purple-900 bg-purple-900': complete,
+            'border-purple-200 bg-purple-200': !complete,
+          }"
           @click.stop.prevent="toggleCompleteGame(game.title)"
         >
           <CheckIcon
             v-if="complete"
-            class="w-6 h-6 text-purple-900"
+            class="w-6 h-6 text-purple-200 stroke-[3px]"
           />
         </button>
 
