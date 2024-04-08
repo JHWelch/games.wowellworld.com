@@ -42,9 +42,10 @@ useSortable(gamesList, config.games, {
       v-for="game in config.games"
       :key="game.title"
       :game="game"
-      :complete="true"
+      :complete="completed.has(game.title)"
       :edit="edit"
       :remove-game="removeGame"
+      :complete-game="completeGame"
     />
   </ul>
 </template>

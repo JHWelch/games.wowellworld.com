@@ -8,6 +8,7 @@ defineProps<{
   edit: boolean
   game: Game
   removeGame: (title: string) => void
+  completeGame: (title: string) => void
 }>()
 </script>
 
@@ -24,15 +25,16 @@ defineProps<{
           class="w-4 h-4 handle"
         />
 
-        <div
+        <button
           v-else
           class="flex items-center justify-center w-6 h-6 bg-purple-300 border-2 rounded-md"
+          @click.stop.prevent="completeGame(game.title)"
         >
           <CheckIcon
             v-if="complete"
             class="w-6 h-6 text-purple-900"
           />
-        </div>
+        </button>
 
         <span>
           {{ game.title }}
