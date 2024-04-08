@@ -18,6 +18,7 @@ defineProps<{
       :href="game.url"
       target="blank"
       class="flex justify-between w-full h-full p-4 align-middle border cursor-pointer hover:underline"
+      @click="completeGame(game.title)"
     >
       <div class="flex items-center space-x-2">
         <Bars3Icon
