@@ -57,7 +57,7 @@ useSortable(gamesList, config.games, {
   <div class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-4 text-white">
     <ul
       ref="gamesList"
-      class="flex flex-col flex-grow w-full space-y-4"
+      class="flex flex-col flex-grow w-full space-y-5"
     >
       <Game
         v-for="game in config.games"

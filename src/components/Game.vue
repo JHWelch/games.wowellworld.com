@@ -18,7 +18,7 @@ defineProps<{
     <a
       :href="game.url"
       target="blank"
-      class="flex justify-between w-full h-full p-4 align-middle border cursor-pointer"
+      class="flex items-center justify-between w-full h-full p-4 text-xl align-middle border-2 cursor-pointer"
       :class="{
         'text-purple-950 border-purple-950 line-through': complete,
         'border-purple-200 hover:underline': !complete,
@@ -28,7 +28,7 @@ defineProps<{
       <div class="flex items-center space-x-4">
         <Bars3Icon
           v-if="edit"
-          class="w-4 h-4 handle"
+          class="w-6 h-6 handle"
         />
 
         <button
@@ -55,9 +55,10 @@ defineProps<{
         <button
           v-if="edit"
           :id="'remove-' + id(game.title)"
+          class="flex items-center justify-center w-6 h-6"
           @click.stop.prevent="removeGame(game.title)"
         >
-          <XMarkIcon class="w-4 h-4" />
+          <XMarkIcon class="w-6 h-6 stroke-[2px]" />
         </button>
       </div>
     </a>
