@@ -11,7 +11,6 @@ defineProps<{
 
 const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
 const config = reactive<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
-
 watch(config, (newConfig) => {
   localStorage.setItem('config', JSON.stringify(newConfig))
 })
@@ -19,6 +18,14 @@ watch(config, (newConfig) => {
 const removeGame = (title: string) => {
   config.games = config.games.filter(game => game.title !== title)
 }
+
+const completed = reactive(new Set<string>())
+const completeGame = (title: string) => {
+  completed.add(title)
+}
+watch(completed, (newCompleted) => {
+  localStorage.setItem('today', JSON.stringify(Array.from(newCompleted)))
+})
 
 const gamesList = ref<HTMLElement | null>(null)
 useSortable(gamesList, config.games, {
@@ -35,6 +42,7 @@ useSortable(gamesList, config.games, {
       v-for="game in config.games"
       :key="game.title"
       :game="game"
+      :complete="true"
       :edit="edit"
       :remove-game="removeGame"
     />

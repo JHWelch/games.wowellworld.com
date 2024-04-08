@@ -101,3 +101,20 @@ describe('games have been customized', () => {
     expect(text).not.toContain('Spotle')
   })
 })
+
+describe('completeGame', () => {
+  beforeAll(async () => {
+    wrapper = mount(Games, { props: { edit: false } })
+    await wrapper.vm.completeGame('Wordle')
+  })
+
+  it('marks the game as complete', async () => {
+    expect(wrapper.vm.completed.has('Wordle')).toBe(true)
+  })
+
+  it('marks the game as complete in localStorage', () => {
+    const today = localStorage.getItem('today')
+
+    expect(today).toContain('Wordle')
+  })
+})
