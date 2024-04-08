@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import Games from './components/Games.vue'
 import Switch from './components/Switch.vue'
 
-const enabled = ref(false)
+const edit = ref(false)
 </script>
 
 <template>
@@ -12,10 +12,10 @@ const enabled = ref(false)
       <div class="flex justify-end w-full max-w-xl space-x-2 text-purple-300">
         <span>Edit</span>
 
-        <Switch v-model="enabled" />
+        <Switch v-model="edit" />
       </div>
     </div>
 
-    <Games />
+    <Games :edit="edit" />
   </div>
 </template>

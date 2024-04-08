@@ -6,6 +6,10 @@ import { id } from '../utils/strings'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/solid'
 import { useSortable } from '@vueuse/integrations/useSortable'
 
+defineProps<{
+  edit: boolean
+}>()
+
 const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
 const config = reactive<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
 
@@ -38,19 +42,25 @@ useSortable(gamesList, config.games, {
         class="flex justify-between w-full h-full p-4 align-middle border cursor-pointer hover:underline"
       >
         <div class="flex items-center space-x-2">
-          <Bars3Icon class="w-4 h-4 handle" />
+          <Bars3Icon
+            v-if="edit"
+            class="w-4 h-4 handle"
+          />
 
           <span>
             {{ game.title }}
           </span>
         </div>
 
-        <button
-          :id="'remove-' + id(game.title)"
-          @click.stop.prevent="removeGame(game.title)"
-        >
-          <XMarkIcon class="w-4 h-4" />
-        </button>
+        <div>
+          <button
+            v-if="edit"
+            :id="'remove-' + id(game.title)"
+            @click.stop.prevent="removeGame(game.title)"
+          >
+            <XMarkIcon class="w-4 h-4" />
+          </button>
+        </div>
       </a>
     </li>
   </ul>

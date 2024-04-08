@@ -5,7 +5,7 @@ import { it, expect, describe, beforeEach, beforeAll } from 'vitest'
 let wrapper: VueWrapper
 
 it('shows all game titles', () => {
-  const text = shallowMount(Games).text()
+  const text = shallowMount(Games, { props: { edit: false } }).text()
 
   expect(text).toContain('Wordle')
   expect(text).toContain('Connections')
@@ -16,20 +16,59 @@ it('shows all game titles', () => {
   expect(text).toContain('Spotle')
 })
 
-describe('click remove icon on game', () => {
+describe('edit enabled', () => {
   beforeAll(async () => {
-    wrapper = shallowMount(Games)
-    await wrapper.find('#remove-wordle').trigger('click')
+    wrapper = shallowMount(Games, { props: { edit: true } })
   })
 
-  it('removes the game from the list', async () => {
-    const text = wrapper.text()
-    expect(text).not.toContain('Wordle')
+  it('displays remove icon on each game', () => {
+    expect(wrapper.find('#remove-wordle').exists()).toBe(true)
+    expect(wrapper.find('#remove-connections').exists()).toBe(true)
+    expect(wrapper.find('#remove-mini-crossword').exists()).toBe(true)
+    expect(wrapper.find('#remove-crossword').exists()).toBe(true)
+    expect(wrapper.find('#remove-cinematrix').exists()).toBe(true)
+    expect(wrapper.find('#remove-framed').exists()).toBe(true)
+    expect(wrapper.find('#remove-spotle').exists()).toBe(true)
   })
 
-  it('removes the item from localStorage', () => {
-    const config = JSON.parse(localStorage.getItem('config') || '{}')
-    expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
+  it('displays sort handles', () => {
+    expect(wrapper.findAll('.handle').length).toBe(7)
+  })
+
+  describe('click remove icon on game', () => {
+    beforeAll(async () => {
+      await wrapper.find('#remove-wordle').trigger('click')
+    })
+
+    it('removes the game from the list', async () => {
+      const text = wrapper.text()
+      expect(text).not.toContain('Wordle')
+    })
+
+    it('removes the item from localStorage', () => {
+      const config = JSON.parse(localStorage.getItem('config') || '{}')
+      expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
+    })
+  })
+})
+
+describe('edit disabled', () => {
+  beforeAll(() => {
+    wrapper = shallowMount(Games, { props: { edit: false } })
+  })
+
+  it('does not display remove icon on each game', () => {
+    expect(wrapper.find('#remove-wordle').exists()).toBe(false)
+    expect(wrapper.find('#remove-connections').exists()).toBe(false)
+    expect(wrapper.find('#remove-mini-crossword').exists()).toBe(false)
+    expect(wrapper.find('#remove-crossword').exists()).toBe(false)
+    expect(wrapper.find('#remove-cinematrix').exists()).toBe(false)
+    expect(wrapper.find('#remove-framed').exists()).toBe(false)
+    expect(wrapper.find('#remove-spotle').exists()).toBe(false)
+  })
+
+  it('does not display sort handles', () => {
+    expect(wrapper.findAll('.handle').length).toBe(0)
   })
 })
 
@@ -50,7 +89,7 @@ describe('games have been customized', () => {
   })
 
   it('shows only the games that have been customized', () => {
-    const text = shallowMount(Games).text()
+    const text = shallowMount(Games, { props: { edit: false } }).text()
 
     expect(text).toContain('Wordle')
     expect(text).toContain('Connections')
