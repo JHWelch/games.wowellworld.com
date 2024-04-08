@@ -28,7 +28,7 @@
   "exclude": [
     "src/**/__tests__/*",
     "src/**/__mocks__/*",
-    "src/**/*.{test,spec}.ts",
+    "src/**/*.spec.ts",
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
