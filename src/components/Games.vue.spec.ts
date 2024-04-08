@@ -1,6 +1,6 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Games from './Games.vue'
-import { it, expect, describe, beforeEach, beforeAll } from 'vitest'
+import { it, expect, describe, beforeEach, beforeEach } from 'vitest'
 import { defaultConfig } from '../config/defaultConfig'
 
 let wrapper: VueWrapper
@@ -18,7 +18,7 @@ it('shows all game titles', () => {
 })
 
 describe('edit enabled', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     wrapper = mount(Games, { props: { edit: true } })
   })
 
@@ -42,7 +42,7 @@ describe('edit enabled', () => {
 })
 
 describe('edit disabled', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     wrapper = mount(Games, { props: { edit: false } })
   })
 
@@ -66,7 +66,7 @@ describe('edit disabled', () => {
 })
 
 describe('removeGame', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     wrapper = mount(Games, { props: { edit: true } })
     await wrapper.vm.removeGame('Wordle')
   })
@@ -83,7 +83,7 @@ describe('removeGame', () => {
 })
 
 describe('completeGame', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     wrapper = mount(Games, { props: { edit: false } })
     await wrapper.vm.completeGame('Wordle')
   })
@@ -97,6 +97,25 @@ describe('completeGame', () => {
 
     expect(today.completed).toContain('Wordle')
     expect(today.date).toBe(new Date().toDateString())
+  })
+})
+
+describe('toggleCompleteGame', () => {
+  beforeEach(() => {
+    localStorage.removeItem('today')
+    wrapper = mount(Games, { props: { edit: false } })
+  })
+
+  it('marks the game as complete and uncomplete', async () => {
+    expect(wrapper.vm.completed.has('Wordle')).toBe(false)
+
+    await wrapper.vm.toggleCompleteGame('Wordle')
+
+    expect(wrapper.vm.completed.has('Wordle')).toBe(true)
+
+    await wrapper.vm.toggleCompleteGame('Wordle')
+
+    expect(wrapper.vm.completed.has('Wordle')).toBe(false)
   })
 })
 
@@ -139,7 +158,7 @@ describe('games have been customized', () => {
 })
 
 describe('has existing completions from today', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     localStorage.setItem('today', JSON.stringify({
       date: new Date().toDateString(),
       completed: ['Wordle'],
@@ -154,7 +173,7 @@ describe('has existing completions from today', () => {
 })
 
 describe('has existing completions from yesterday', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     localStorage.setItem('today', JSON.stringify({
       date: new Date(Date.now() - 86400000).toDateString(),
       completed: ['Wordle'],

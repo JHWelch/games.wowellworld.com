@@ -12,6 +12,7 @@ const game = {
 
 const removeGame = vi.fn()
 const completeGame = vi.fn()
+const toggleCompleteGame = vi.fn()
 
 const props = {
   edit: false,
@@ -19,6 +20,7 @@ const props = {
   game,
   removeGame,
   completeGame,
+  toggleCompleteGame,
 }
 
 it('shows all game title', () => {

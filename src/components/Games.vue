@@ -33,6 +33,13 @@ const completed = reactive(
 const completeGame = (title: string) => {
   completed.add(title)
 }
+const toggleCompleteGame = (title: string) => {
+  if (completed.has(title)) {
+    completed.delete(title)
+  } else {
+    completed.add(title)
+  }
+}
 watch(completed, (newCompleted) => {
   localStorage.setItem('today', JSON.stringify({
     date: new Date().toDateString(),
@@ -60,6 +67,7 @@ useSortable(gamesList, config.games, {
         :edit="edit"
         :remove-game="removeGame"
         :complete-game="completeGame"
+        :toggle-complete-game="toggleCompleteGame"
       />
     </ul>
 

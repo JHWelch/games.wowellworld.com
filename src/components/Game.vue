@@ -9,6 +9,7 @@ defineProps<{
   game: Game
   removeGame: (title: string) => void
   completeGame: (title: string) => void
+  toggleCompleteGame: (title: string) => void
 }>()
 </script>
 
@@ -29,7 +30,7 @@ defineProps<{
         <button
           v-else
           class="flex items-center justify-center w-6 h-6 bg-purple-300 border-2 rounded-md"
-          @click.stop.prevent="completeGame(game.title)"
+          @click.stop.prevent="toggleCompleteGame(game.title)"
         >
           <CheckIcon
             v-if="complete"
