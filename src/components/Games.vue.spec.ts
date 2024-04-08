@@ -113,8 +113,9 @@ describe('completeGame', () => {
   })
 
   it('marks the game as complete in localStorage', () => {
-    const today = localStorage.getItem('today')
+    const today = JSON.parse(localStorage.getItem('today') || '{}')
 
-    expect(today).toContain('Wordle')
+    expect(today.completed).toContain('Wordle')
+    expect(today.date).toBe(new Date().toDateString())
   })
 })

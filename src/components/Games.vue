@@ -24,7 +24,10 @@ const completeGame = (title: string) => {
   completed.add(title)
 }
 watch(completed, (newCompleted) => {
-  localStorage.setItem('today', JSON.stringify(Array.from(newCompleted)))
+  localStorage.setItem('today', JSON.stringify({
+    date: new Date().toDateString(),
+    completed: Array.from(newCompleted),
+  }))
 })
 
 const gamesList = ref<HTMLElement | null>(null)
