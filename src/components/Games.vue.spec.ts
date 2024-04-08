@@ -53,6 +53,24 @@ describe('removeGame', () => {
   })
 })
 
+describe('completeGame', () => {
+  beforeAll(async () => {
+    wrapper = mount(Games, { props: { edit: false } })
+    await wrapper.vm.completeGame('Wordle')
+  })
+
+  it('marks the game as complete', async () => {
+    expect(wrapper.vm.completed.has('Wordle')).toBe(true)
+  })
+
+  it('marks the game as complete in localStorage', () => {
+    const today = JSON.parse(localStorage.getItem('today') || '{}')
+
+    expect(today.completed).toContain('Wordle')
+    expect(today.date).toBe(new Date().toDateString())
+  })
+})
+
 describe('edit disabled', () => {
   beforeAll(() => {
     wrapper = mount(Games, { props: { edit: false } })
@@ -102,20 +120,32 @@ describe('games have been customized', () => {
   })
 })
 
-describe('completeGame', () => {
+describe('has existing completions from today', () => {
   beforeAll(async () => {
+    localStorage.setItem('today', JSON.stringify({
+      date: new Date().toDateString(),
+      completed: ['Wordle'],
+    }))
+
     wrapper = mount(Games, { props: { edit: false } })
-    await wrapper.vm.completeGame('Wordle')
   })
 
   it('marks the game as complete', async () => {
     expect(wrapper.vm.completed.has('Wordle')).toBe(true)
   })
+})
 
-  it('marks the game as complete in localStorage', () => {
-    const today = JSON.parse(localStorage.getItem('today') || '{}')
+describe('has existing completions from yesterday', () => {
+  beforeAll(async () => {
+    localStorage.setItem('today', JSON.stringify({
+      date: new Date(Date.now() - 86400000).toDateString(),
+      completed: ['Wordle'],
+    }))
 
-    expect(today.completed).toContain('Wordle')
-    expect(today.date).toBe(new Date().toDateString())
+    wrapper = mount(Games, { props: { edit: false } })
+  })
+
+  it('does not mark the game as complete', async () => {
+    expect(wrapper.vm.completed.has('Wordle')).toBe(false)
   })
 })

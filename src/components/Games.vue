@@ -19,7 +19,13 @@ const removeGame = (title: string) => {
   config.games = config.games.filter(game => game.title !== title)
 }
 
-const completed = reactive(new Set<string>())
+const today = JSON.parse(localStorage.getItem('today') ?? '{}')
+
+const completed = reactive(
+  today.date === new Date().toDateString()
+    ? new Set(today.completed)
+    : new Set<string>(),
+)
 const completeGame = (title: string) => {
   completed.add(title)
 }
