@@ -16,6 +16,22 @@ it('shows all game titles', () => {
   expect(text).toContain('Spotle')
 })
 
+describe('removeGame', () => {
+  beforeAll(async () => {
+    await wrapper.vm.removeGame('Wordle')
+  })
+
+  it('removes the game from the list', async () => {
+    const text = wrapper.text()
+    expect(text).not.toContain('Wordle')
+  })
+
+  it('removes the item from localStorage', () => {
+    const config = JSON.parse(localStorage.getItem('config') || '{}')
+    expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
+  })
+})
+
 describe('edit enabled', () => {
   beforeAll(async () => {
     wrapper = mount(Games, { props: { edit: true } })
@@ -33,22 +49,6 @@ describe('edit enabled', () => {
 
   it('displays sort handles', () => {
     expect(wrapper.findAll('.handle').length).toBe(7)
-  })
-
-  describe('click remove icon on game', () => {
-    beforeAll(async () => {
-      await wrapper.find('#remove-wordle').trigger('click')
-    })
-
-    it('removes the game from the list', async () => {
-      const text = wrapper.text()
-      expect(text).not.toContain('Wordle')
-    })
-
-    it('removes the item from localStorage', () => {
-      const config = JSON.parse(localStorage.getItem('config') || '{}')
-      expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
-    })
   })
 })
 
