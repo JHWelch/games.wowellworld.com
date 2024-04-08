@@ -1,11 +1,11 @@
-import { VueWrapper, shallowMount } from '@vue/test-utils'
+import { VueWrapper, mount } from '@vue/test-utils'
 import Games from './Games.vue'
 import { it, expect, describe, beforeEach, beforeAll } from 'vitest'
 
 let wrapper: VueWrapper
 
 it('shows all game titles', () => {
-  const text = shallowMount(Games, { props: { edit: false } }).text()
+  const text = mount(Games, { props: { edit: false } }).text()
 
   expect(text).toContain('Wordle')
   expect(text).toContain('Connections')
@@ -18,7 +18,7 @@ it('shows all game titles', () => {
 
 describe('edit enabled', () => {
   beforeAll(async () => {
-    wrapper = shallowMount(Games, { props: { edit: true } })
+    wrapper = mount(Games, { props: { edit: true } })
   })
 
   it('displays remove icon on each game', () => {
@@ -54,7 +54,7 @@ describe('edit enabled', () => {
 
 describe('edit disabled', () => {
   beforeAll(() => {
-    wrapper = shallowMount(Games, { props: { edit: false } })
+    wrapper = mount(Games, { props: { edit: false } })
   })
 
   it('does not display remove icon on each game', () => {
@@ -89,7 +89,7 @@ describe('games have been customized', () => {
   })
 
   it('shows only the games that have been customized', () => {
-    const text = shallowMount(Games, { props: { edit: false } }).text()
+    const text = mount(Games, { props: { edit: false } }).text()
 
     expect(text).toContain('Wordle')
     expect(text).toContain('Connections')

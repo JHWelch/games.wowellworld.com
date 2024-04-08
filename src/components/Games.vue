@@ -2,9 +2,8 @@
 import { reactive, ref, watch } from 'vue'
 import { defaultConfig } from '../config/defaultConfig'
 import { Config, isConfig } from '../config/config'
-import { id } from '../utils/strings'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/solid'
 import { useSortable } from '@vueuse/integrations/useSortable'
+import Game from './Game.vue'
 
 defineProps<{
   edit: boolean
@@ -32,36 +31,12 @@ useSortable(gamesList, config.games, {
     ref="gamesList"
     class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-4 text-white"
   >
-    <li
+    <Game
       v-for="game in config.games"
       :key="game.title"
-    >
-      <a
-        :href="game.url"
-        target="blank"
-        class="flex justify-between w-full h-full p-4 align-middle border cursor-pointer hover:underline"
-      >
-        <div class="flex items-center space-x-2">
-          <Bars3Icon
-            v-if="edit"
-            class="w-4 h-4 handle"
-          />
-
-          <span>
-            {{ game.title }}
-          </span>
-        </div>
-
-        <div>
-          <button
-            v-if="edit"
-            :id="'remove-' + id(game.title)"
-            @click.stop.prevent="removeGame(game.title)"
-          >
-            <XMarkIcon class="w-4 h-4" />
-          </button>
-        </div>
-      </a>
-    </li>
+      :game="game"
+      :edit="edit"
+      :remove-game="removeGame"
+    />
   </ul>
 </template>
