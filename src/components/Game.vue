@@ -18,7 +18,7 @@ defineProps<{
     <a
       :href="game.url"
       target="blank"
-      class="flex items-center justify-between w-full h-full p-4 text-xl align-middle border-2 cursor-pointer"
+      class="flex items-center justify-between w-full h-full p-4 text-xl align-middle border-2 rounded-lg cursor-pointer backdrop-contrast-150"
       :class="{
         'text-purple-950 border-purple-950 line-through': complete,
         'border-purple-200 hover:underline': !complete,
