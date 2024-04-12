@@ -36,7 +36,9 @@ watch(completed, (newCompleted) => {
 })
 
 const gamesList = ref<HTMLElement | null>(null)
-useSortable(gamesList, config.games)
+useSortable(gamesList, config.games, {
+  handle: '.handle',
+})
 </script>
 
 <template>
