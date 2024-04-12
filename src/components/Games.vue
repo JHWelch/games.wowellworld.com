@@ -1,27 +1,15 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { defaultConfig } from '../config/defaultConfig'
-import { Config, isConfig } from '../config/config'
+import { config } from '../state/configState'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import Game from './Game.vue'
+import AddGameButton from './AddGame/AddGameButton.vue'
 
 defineProps<{
   edit: boolean
 }>()
 
-const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
-const config = reactive<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
-watch(config, (newConfig) => {
-  localStorage.setItem('config', JSON.stringify(newConfig))
-})
-
-const removeGame = (title: string) => {
-  config.games = config.games.filter(game => game.title !== title)
-}
-
-const resetGames = () => {
-  config.games = defaultConfig.games
-}
+config.init()
 
 const today = JSON.parse(localStorage.getItem('today') ?? '{}')
 
@@ -48,13 +36,11 @@ watch(completed, (newCompleted) => {
 })
 
 const gamesList = ref<HTMLElement | null>(null)
-useSortable(gamesList, config.games, {
-  handle: '.handle',
-})
+useSortable(gamesList, config.games)
 </script>
 
 <template>
-  <div class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-4 text-white">
+  <div class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-10 text-white">
     <ul
       ref="gamesList"
       class="flex flex-col flex-grow w-full space-y-5"
@@ -65,16 +51,19 @@ useSortable(gamesList, config.games, {
         :game="game"
         :complete="completed.has(game.title)"
         :edit="edit"
-        :remove-game="removeGame"
+        :remove-game="config.removeGame"
         :complete-game="completeGame"
         :toggle-complete-game="toggleCompleteGame"
       />
+
+      <AddGameButton v-if="edit" />
     </ul>
 
     <button
       v-if="edit"
+      id="reset-games"
       class="w-full p-2 text-white bg-red-500 rounded-md"
-      @click="resetGames"
+      @click="config.resetGames"
     >
       Reset Games to Default
     </button>

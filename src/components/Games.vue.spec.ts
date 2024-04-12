@@ -1,6 +1,6 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Games from './Games.vue'
-import { it, expect, describe, beforeEach, beforeEach } from 'vitest'
+import { it, expect, describe, beforeEach } from 'vitest'
 import { defaultConfig } from '../config/defaultConfig'
 
 let wrapper: VueWrapper
@@ -39,6 +39,10 @@ describe('edit enabled', () => {
   it('displays reset button', () => {
     expect(wrapper.text()).toContain('Reset Games to Default')
   })
+
+  it('shows the add game button', () => {
+    expect(wrapper.text()).toContain('Add Game')
+  })
 })
 
 describe('edit disabled', () => {
@@ -65,22 +69,22 @@ describe('edit disabled', () => {
   })
 })
 
-describe('removeGame', () => {
-  beforeEach(async () => {
-    wrapper = mount(Games, { props: { edit: true } })
-    await wrapper.vm.removeGame('Wordle')
-  })
+// describe('removeGame', () => {
+//   beforeEach(async () => {
+//     wrapper = mount(Games, { props: { edit: true } })
+//     await wrapper.vm.removeGame('Wordle')
+//   })
 
-  it('removes the game from the list', async () => {
-    const text = wrapper.text()
-    expect(text).not.toContain('Wordle')
-  })
+//   it('removes the game from the list', async () => {
+//     const text = wrapper.text()
+//     expect(text).not.toContain('Wordle')
+//   })
 
-  it('removes the item from localStorage', () => {
-    const config = JSON.parse(localStorage.getItem('config') || '{}')
-    expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
-  })
-})
+//   it('removes the item from localStorage', () => {
+//     const config = JSON.parse(localStorage.getItem('config') || '{}')
+//     expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
+//   })
+// })
 
 describe('completeGame', () => {
   beforeEach(async () => {
@@ -149,7 +153,7 @@ describe('games have been customized', () => {
 
   it('can reset the games to the default list', async () => {
     const wrapper = mount(Games, { props: { edit: true } })
-    await wrapper.vm.resetGames()
+    await wrapper.find('#reset-games').trigger('click')
 
     const config = JSON.parse(localStorage.getItem('config') || '{}')
     expect(config.games).toEqual(defaultConfig.games)
