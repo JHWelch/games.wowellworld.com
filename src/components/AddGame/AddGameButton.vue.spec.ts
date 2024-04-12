@@ -1,12 +1,12 @@
 import { VueWrapper, mount } from '@vue/test-utils'
-AddGameButton from './AddGameButton.vue'
+import AddGameButton from './AddGameButton.vue'
 import { addGameModal } from '../../state/addGameModalState.ts'
 import { it, expect, describe, beforeEach } from 'vitest'
 
 let wrapper: VueWrapper
 
 beforeEach(() => {
-  wrapper = mount(AddGame)
+  wrapper = mount(AddGameButton)
 })
 
 it('has cta', () => {
