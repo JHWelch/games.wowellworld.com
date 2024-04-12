@@ -39,7 +39,7 @@ const addGame = () => {
         leave-from="opacity-100"
         leave-to="opacity-0"
       >
-        <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75" />
+        <div class="fixed inset-0 transition-opacity bg-purple-700 bg-opacity-50 backdrop-blur-sm" />
       </TransitionChild>
 
       <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
