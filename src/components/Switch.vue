@@ -13,7 +13,10 @@ const enabled = ref(props.modelValue)
 <template>
   <Switch
     v-model="enabled"
-    :class="[enabled ? 'bg-purple-400' : 'bg-neutral-500', 'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2']"
+    :class="[
+      enabled ? 'bg-purple-400' : 'bg-neutral-500',
+      'relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2'
+    ]"
     @click="$emit('update:modelValue', !enabled)"
   >
     <span class="sr-only">Use setting</span>
