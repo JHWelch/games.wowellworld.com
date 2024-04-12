@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
 import { defaultConfig } from '../config/defaultConfig'
-import { Config, isConfig } from '../config/config'
+import { config } from '../state/configState'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import Game from './Game.vue'
 import AddGameButton from './AddGame/AddGameButton.vue'
@@ -10,11 +10,7 @@ defineProps<{
   edit: boolean
 }>()
 
-const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
-const config = reactive<Config>(isConfig(localConfig) ? localConfig : defaultConfig)
-watch(config, (newConfig) => {
-  localStorage.setItem('config', JSON.stringify(newConfig))
-})
+config.init()
 
 const removeGame = (title: string) => {
   config.games = config.games.filter(game => game.title !== title)
