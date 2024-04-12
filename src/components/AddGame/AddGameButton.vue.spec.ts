@@ -1,5 +1,5 @@
 import { VueWrapper, mount } from '@vue/test-utils'
-import AddGame from './AddGame.vue'
+AddGameButton from './AddGameButton.vue'
 import { addGameModal } from '../../state/addGameModalState.ts'
 import { it, expect, describe, beforeEach } from 'vitest'
 

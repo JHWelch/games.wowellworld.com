@@ -4,7 +4,7 @@ import { defaultConfig } from '../config/defaultConfig'
 import { Config, isConfig } from '../config/config'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import Game from './Game.vue'
-import AddGame from './Games/AddGame.vue'
+import AddGameButton from './AddGame/AddGameButton.vue'
 
 defineProps<{
   edit: boolean
@@ -71,7 +71,7 @@ useSortable(gamesList, config.games, {
         :toggle-complete-game="toggleCompleteGame"
       />
 
-      <AddGame v-if="edit" />
+      <AddGameButton v-if="edit" />
     </ul>
 
     <button
