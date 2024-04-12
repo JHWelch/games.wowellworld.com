@@ -1,5 +1,5 @@
 import { reactive, watch } from 'vue'
-import { Config, isConfig } from '../config/config'
+import { Config, Game, isConfig } from '../config/config'
 import { defaultConfig } from '../config/defaultConfig'
 
 type ConfigState = Config & {
@@ -7,6 +7,9 @@ type ConfigState = Config & {
   load: () => void
   save: () => void
   toConfig: () => Config
+  addGame: (game: Game) => void
+  removeGame: (title: string) => void
+  resetGames: () => void
 }
 
 export const config: ConfigState = reactive<ConfigState>({
@@ -28,5 +31,14 @@ export const config: ConfigState = reactive<ConfigState>({
   toConfig: () => ({
     games: config.games,
   }),
+  addGame: (game: Game) => {
+    config.games.push(game)
+  },
+  resetGames: () => {
+    config.games = defaultConfig.games
+  },
+  removeGame: (title: string) => {
+    config.games = config.games.filter(game => game.title !== title)
+  },
   ...defaultConfig,
 })

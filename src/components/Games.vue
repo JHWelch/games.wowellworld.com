@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
-import { defaultConfig } from '../config/defaultConfig'
 import { config } from '../state/configState'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import Game from './Game.vue'
@@ -11,14 +10,6 @@ defineProps<{
 }>()
 
 config.init()
-
-const removeGame = (title: string) => {
-  config.games = config.games.filter(game => game.title !== title)
-}
-
-const resetGames = () => {
-  config.games = defaultConfig.games
-}
 
 const today = JSON.parse(localStorage.getItem('today') ?? '{}')
 
@@ -62,7 +53,7 @@ useSortable(gamesList, config.games, {
         :game="game"
         :complete="completed.has(game.title)"
         :edit="edit"
-        :remove-game="removeGame"
+        :remove-game="config.removeGame"
         :complete-game="completeGame"
         :toggle-complete-game="toggleCompleteGame"
       />
@@ -72,8 +63,9 @@ useSortable(gamesList, config.games, {
 
     <button
       v-if="edit"
+      id="reset-games"
       class="w-full p-2 text-white bg-red-500 rounded-md"
-      @click="resetGames"
+      @click="config.resetGames"
     >
       Reset Games to Default
     </button>
