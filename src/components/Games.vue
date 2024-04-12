@@ -4,6 +4,7 @@ import { defaultConfig } from '../config/defaultConfig'
 import { Config, isConfig } from '../config/config'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import Game from './Game.vue'
+import { PlusIcon } from '@heroicons/vue/24/outline'
 
 defineProps<{
   edit: boolean
@@ -54,7 +55,7 @@ useSortable(gamesList, config.games, {
 </script>
 
 <template>
-  <div class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-4 text-white">
+  <div class="flex flex-col flex-grow w-full max-w-sm p-4 space-y-10 text-white">
     <ul
       ref="gamesList"
       class="flex flex-col flex-grow w-full space-y-5"
@@ -69,6 +70,15 @@ useSortable(gamesList, config.games, {
         :complete-game="completeGame"
         :toggle-complete-game="toggleCompleteGame"
       />
+
+      <button
+        v-if="edit"
+        class="flex items-center justify-center w-full h-full p-4 space-x-2 text-xl align-middle border-2 border-dashed rounded-lg cursor-pointer backdrop-contrast-75"
+      >
+        <PlusIcon class="w-6 h-6 stroke-[3px]" />
+
+        <span>Add Game</span>
+      </button>
     </ul>
 
     <button

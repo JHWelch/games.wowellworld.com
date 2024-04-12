@@ -1,6 +1,6 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Games from './Games.vue'
-import { it, expect, describe, beforeEach, beforeEach } from 'vitest'
+import { it, expect, describe, beforeEach } from 'vitest'
 import { defaultConfig } from '../config/defaultConfig'
 
 let wrapper: VueWrapper
@@ -38,6 +38,10 @@ describe('edit enabled', () => {
 
   it('displays reset button', () => {
     expect(wrapper.text()).toContain('Reset Games to Default')
+  })
+
+  it('shows the add game button', () => {
+    expect(wrapper.text()).toContain('Add Game')
   })
 })
 
