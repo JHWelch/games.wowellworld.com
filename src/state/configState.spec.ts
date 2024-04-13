@@ -96,6 +96,29 @@ describe('addGame', () => {
       })
     })
   })
+
+  describe('updating existing game', () => {
+    it('updates the game in the list', () => {
+      config.init()
+
+      const oldGame = config.games[0]
+
+      const editGame = {
+        id: oldGame.id,
+        title: 'New Title',
+        url: 'https://example.com/updated',
+      }
+
+      config.addGame(editGame)
+
+      expect(config.games).toContainEqual({
+        id: oldGame.id,
+        title: 'New Title',
+        url: 'https://example.com/updated',
+      })
+      expect(config.games).not.toContainEqual(oldGame)
+    })
+  })
 })
 
 describe('resetGames', () => {
