@@ -43,10 +43,10 @@ import { addGameModal } from '../../state/addGameModalState'
                     as="h3"
                     class="text-lg font-semibold leading-6 text-neutral-950"
                   >
-                    {{ addGameModal.editing ? 'Edit Game' : 'Add Game' }}
+                    {{ addGameModal.game.id ? 'Edit Game' : 'Add Game' }}
                   </DialogTitle>
                   <div
-                    v-if="!addGameModal.editing"
+                    v-if="!addGameModal.game.id"
                     class="mt-2"
                   >
                     <p class="text-sm text-white">
@@ -99,7 +99,7 @@ import { addGameModal } from '../../state/addGameModalState'
                   class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                   @click="addGameModal.addGame"
                 >
-                  {{ addGameModal.editing ? 'Save' : 'Add' }}
+                  {{ addGameModal.game.id ? 'Save' : 'Add' }}
                 </button>
                 <button
                   ref="cancelButtonRef"
