@@ -34,3 +34,22 @@ describe('init', () => {
     })
   })
 })
+
+describe('removeGame', () => {
+  beforeEach(() => {
+    config.init()
+
+    config.removeGame('Wordle')
+  })
+
+  it('removes the game from the list', () => {
+    expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
+  })
+
+  it('removes the item from localStorage', () => {
+    config.removeGame('Wordle')
+    const localConfig = JSON.parse(localStorage.getItem('config') || '{}')
+
+    expect(localConfig.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
+  })
+})

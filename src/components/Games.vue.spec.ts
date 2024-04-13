@@ -69,23 +69,6 @@ describe('edit disabled', () => {
   })
 })
 
-// describe('removeGame', () => {
-//   beforeEach(async () => {
-//     wrapper = mount(Games, { props: { edit: true } })
-//     await wrapper.vm.removeGame('Wordle')
-//   })
-
-//   it('removes the game from the list', async () => {
-//     const text = wrapper.text()
-//     expect(text).not.toContain('Wordle')
-//   })
-
-//   it('removes the item from localStorage', () => {
-//     const config = JSON.parse(localStorage.getItem('config') || '{}')
-//     expect(config.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
-//   })
-// })
-
 describe('completeGame', () => {
   beforeEach(async () => {
     wrapper = mount(Games, { props: { edit: false } })
