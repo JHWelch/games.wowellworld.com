@@ -4,6 +4,16 @@ Simple Vue app for linking to daily games in one place.
 
 ## Install
 
+Node version is controlled with NVM and `.nvmrc` file. If you have NVM installed, you can run
+
+```bash
+nvm use
+```
+
+Otherwise you can install the correct version manually. See [`.nvmrc`](./.nvmrc) for the version.
+
+Install dependencies with
+
 ```bash
 npm install
 ```
