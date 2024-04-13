@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Game } from '../config/config'
+import { today } from '../state/todayState'
 import { id } from '../utils/strings'
 import { Bars3Icon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
@@ -8,8 +9,6 @@ defineProps<{
   edit: boolean
   game: Game
   removeGame: (title: string) => void
-  completeGame: (title: string) => void
-  toggleCompleteGame: (title: string) => void
 }>()
 </script>
 
@@ -24,7 +23,7 @@ defineProps<{
         'border-purple-200': !complete,
         'hover:underline': !complete && !edit,
       }"
-      @click="edit ? undefined : completeGame(game.title)"
+      @click="edit ? undefined : today.completeGame(game.title)"
     >
       <div class="flex items-center space-x-4">
         <Bars3Icon
@@ -39,7 +38,7 @@ defineProps<{
             'border-purple-900 bg-purple-900': complete,
             'border-purple-200 bg-purple-200': !complete,
           }"
-          @click.stop.prevent="toggleCompleteGame(game.title)"
+          @click.stop.prevent="today.toggleCompleteGame(game.title)"
         >
           <CheckIcon
             v-if="complete"

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { ref } from 'vue'
 import { config } from '../state/configState'
+import { today } from '../state/todayState'
 import { useSortable } from '@vueuse/integrations/useSortable'
 import Game from './Game.vue'
 import AddGameButton from './AddGame/AddGameButton.vue'
@@ -10,30 +11,7 @@ defineProps<{
 }>()
 
 config.init()
-
-const today = JSON.parse(localStorage.getItem('today') ?? '{}')
-
-const completed = reactive(
-  today.date === new Date().toDateString()
-    ? new Set(today.completed)
-    : new Set<string>(),
-)
-const completeGame = (title: string) => {
-  completed.add(title)
-}
-const toggleCompleteGame = (title: string) => {
-  if (completed.has(title)) {
-    completed.delete(title)
-  } else {
-    completed.add(title)
-  }
-}
-watch(completed, (newCompleted) => {
-  localStorage.setItem('today', JSON.stringify({
-    date: new Date().toDateString(),
-    completed: Array.from(newCompleted),
-  }))
-})
+today.init()
 
 const gamesList = ref<HTMLElement | null>(null)
 useSortable(gamesList, config.games, {
@@ -51,11 +29,9 @@ useSortable(gamesList, config.games, {
         v-for="game in config.games"
         :key="game.title"
         :game="game"
-        :complete="completed.has(game.title)"
+        :complete="today.completed.has(game.title)"
         :edit="edit"
         :remove-game="config.removeGame"
-        :complete-game="completeGame"
-        :toggle-complete-game="toggleCompleteGame"
       />
 
       <AddGameButton v-if="edit" />

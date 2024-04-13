@@ -63,3 +63,18 @@ describe('addGame', () => {
     expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
   })
 })
+
+describe('resetGames', () => {
+  it('can reset the games to the default list', async () => {
+    localStorage.setItem('config', JSON.stringify({
+      games: customGames,
+    }))
+    config.init()
+
+    config.resetGames()
+
+    const localConfig = JSON.parse(localStorage.getItem('config') || '{}')
+    expect(localConfig.games).toEqual(defaultConfig.games)
+    expect(config.games).toEqual(defaultConfig.games)
+  })
+})
