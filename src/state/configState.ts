@@ -1,4 +1,5 @@
 import { reactive } from 'vue'
+import { v4 as uuid } from 'uuid'
 import { Config, Game, isConfig } from '../config/config'
 import { defaultConfig } from '../config/defaultConfig'
 
@@ -32,8 +33,15 @@ export const config: ConfigState = reactive<ConfigState>({
     if (!game.url.startsWith('http://') && !game.url.startsWith('https://')) {
       game.url = `https://${game.url}`
     }
-
-    config.games.push(game)
+    const index = game.id ? config.games.findIndex(g => g.id === game.id) : -1
+    if (index !== -1) {
+      config.games[index] = game
+    } else {
+      config.games.push({
+        ...game,
+        id: uuid(),
+      })
+    }
     config.save()
   },
   resetGames: () => {

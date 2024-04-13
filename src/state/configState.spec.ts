@@ -4,10 +4,12 @@ import { config } from './configState'
 
 const customGames = [
   {
+    'id': 'wordle',
     'title': 'Wordle',
     'url': 'https://www.nytimes.com/games/wordle/index.html',
   },
   {
+    'id': 'connections',
     'title': 'Connections',
     'url': 'https://www.nytimes.com/puzzles/connections',
   },
@@ -68,8 +70,16 @@ describe('addGame', () => {
       config.addGame({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
 
 
-      expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
-      expect(config.games).toContainEqual({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
+      expect(config.games).toContainEqual({
+        id: expect.any(String),
+        title: 'New Game',
+        url: 'https://example.com/game',
+      })
+      expect(config.games).toContainEqual({
+        id: expect.any(String),
+        title: 'Unsecure game',
+        url: 'http://example.com/Unsecure',
+      })
     })
   })
 
@@ -79,7 +89,34 @@ describe('addGame', () => {
 
       config.addGame({ title: 'New Game', url: 'example.com/game' })
 
-      expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
+      expect(config.games).toContainEqual({
+        id: expect.any(String),
+        title: 'New Game',
+        url: 'https://example.com/game',
+      })
+    })
+  })
+
+  describe('updating existing game', () => {
+    it('updates the game in the list', () => {
+      config.init()
+
+      const oldGame = config.games[0]
+
+      const editGame = {
+        id: oldGame.id,
+        title: 'New Title',
+        url: 'https://example.com/updated',
+      }
+
+      config.addGame(editGame)
+
+      expect(config.games).toContainEqual({
+        id: oldGame.id,
+        title: 'New Title',
+        url: 'https://example.com/updated',
+      })
+      expect(config.games).not.toContainEqual(oldGame)
     })
   })
 })
