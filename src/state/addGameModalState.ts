@@ -7,6 +7,7 @@ type AddGameModal = {
   game: Game
   open: () => void
   close: () => void
+  reset: () => void
   addGame: () => void
 }
 
@@ -18,12 +19,13 @@ export const addGameModal: AddGameModal = reactive<AddGameModal>({
   },
   open: () => addGameModal.show = true,
   close: () => addGameModal.show = false,
+  reset: () => addGameModal.game = {
+    title: '',
+    url: '',
+  },
   addGame: () => {
     config.addGame(addGameModal.game)
-    addGameModal.game = {
-      title: '',
-      url: '',
-    }
+    addGameModal.reset()
     addGameModal.close()
   },
 })

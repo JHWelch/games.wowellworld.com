@@ -1,6 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { addGameModal } from './addGameModalState'
 import { config } from './configState'
+
+const game = {
+  title: 'Test Game',
+  url: 'test-game.com',
+}
 
 describe('open', () => {
   it('sets show to true', () => {
@@ -19,20 +24,17 @@ describe('close', () => {
 })
 
 describe('addGame', () => {
-  const game = {
-    title: 'Test Game',
-    url: 'test-game.com',
-  }
+  beforeEach(() => {
+    addGameModal.game = game
+  })
 
   it('saves the game to the config', () => {
-    addGameModal.game = game
     addGameModal.addGame()
 
     expect(config.games).toContainEqual(game)
   })
 
   it('resets the game', () => {
-    addGameModal.game = game
     addGameModal.addGame()
 
     expect(addGameModal.game).toEqual({
@@ -45,5 +47,18 @@ describe('addGame', () => {
     addGameModal.addGame()
 
     expect(addGameModal.show).toBe(false)
+  })
+})
+
+describe('reset', () => {
+  it('resets the game', () => {
+    addGameModal.game = game
+
+    addGameModal.reset()
+
+    expect(addGameModal.game).toEqual({
+      title: '',
+      url: '',
+    })
   })
 })
