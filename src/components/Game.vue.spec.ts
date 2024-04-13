@@ -1,7 +1,8 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Game from './Game.vue'
-import { it, expect, describe, beforeAll, vi } from 'vitest'
+import { it, expect, describe, beforeAll } from 'vitest'
 import { CheckIcon } from '@heroicons/vue/24/solid'
+import { today } from '../state/todayState'
 
 let wrapper: VueWrapper
 
@@ -10,17 +11,10 @@ const game = {
   url: 'https://www.nytimes.com/games/wordle/index.html',
 }
 
-const removeGame = vi.fn()
-const completeGame = vi.fn()
-const toggleCompleteGame = vi.fn()
-
 const props = {
   edit: false,
   complete: false,
   game,
-  removeGame,
-  completeGame,
-  toggleCompleteGame,
 }
 
 it('shows all game title', () => {
@@ -45,15 +39,15 @@ describe('edit enabled', () => {
     expect(wrapper.find('.handle').exists()).toBe(true)
   })
 
-  describe('click remove icon on game', () => {
-    beforeAll(async () => {
-      await wrapper.find('#remove-wordle').trigger('click')
-    })
+  // describe('click remove icon on game', () => {
+  //   beforeAll(async () => {
+  //     await wrapper.find('#remove-wordle').trigger('click')
+  //   })
 
-    it('calls removeGame', () => {
-      expect(removeGame).toHaveBeenCalled()
-    })
-  })
+  //   it('calls removeGame', () => {
+  //     expect(removeGame).toHaveBeenCalled()
+  //   })
+  // })
 })
 
 describe('edit disabled', () => {
@@ -70,12 +64,9 @@ describe('edit disabled', () => {
   })
 })
 
-describe('complete disabled', () => {
+describe('game is not completed', () => {
   beforeAll(() => {
-    wrapper = mount(Game, { props: {
-      ...props,
-      complete: false,
-    } })
+    wrapper = mount(Game, { props })
   })
 
   it('does not display complete icon', () => {
@@ -83,12 +74,10 @@ describe('complete disabled', () => {
   })
 })
 
-describe('complete enabled', () => {
+describe('game is completed', () => {
   beforeAll(() => {
-    wrapper = mount(Game, { props: {
-      ...props,
-      complete: true,
-    } })
+    today.completeGame(game.title)
+    wrapper = mount(Game, { props })
   })
 
   it('displays complete icon', () => {

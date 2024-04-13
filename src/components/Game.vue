@@ -1,16 +1,17 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Game } from '../config/config'
+import { config } from '../state/configState'
+import { today } from '../state/todayState'
 import { id } from '../utils/strings'
 import { Bars3Icon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
-defineProps<{
-  complete: boolean
+const props = defineProps<{
   edit: boolean
   game: Game
-  removeGame: (title: string) => void
-  completeGame: (title: string) => void
-  toggleCompleteGame: (title: string) => void
 }>()
+
+const complete = computed(() => today.completed.has(props.game.title))
 </script>
 
 <template>
@@ -24,7 +25,7 @@ defineProps<{
         'border-purple-200': !complete,
         'hover:underline': !complete && !edit,
       }"
-      @click="edit ? undefined : completeGame(game.title)"
+      @click="edit ? undefined : today.completeGame(game.title)"
     >
       <div class="flex items-center space-x-4">
         <Bars3Icon
@@ -39,7 +40,7 @@ defineProps<{
             'border-purple-900 bg-purple-900': complete,
             'border-purple-200 bg-purple-200': !complete,
           }"
-          @click.stop.prevent="toggleCompleteGame(game.title)"
+          @click.stop.prevent="today.toggleCompleteGame(game.title)"
         >
           <CheckIcon
             v-if="complete"
@@ -57,7 +58,7 @@ defineProps<{
           v-if="edit"
           :id="'remove-' + id(game.title)"
           class="flex items-center justify-center w-6 h-6"
-          @click.stop.prevent="removeGame(game.title)"
+          @click.stop.prevent="config.removeGame(game.title)"
         >
           <XMarkIcon class="w-6 h-6 stroke-[2px]" />
         </button>

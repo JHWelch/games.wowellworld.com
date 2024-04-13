@@ -1,4 +1,4 @@
-import { reactive, watch } from 'vue'
+import { reactive } from 'vue'
 import { Config, Game, isConfig } from '../config/config'
 import { defaultConfig } from '../config/defaultConfig'
 
@@ -15,9 +15,6 @@ type ConfigState = Config & {
 export const config: ConfigState = reactive<ConfigState>({
   init: () => {
     config.load()
-    watch(config, (newConfig) => {
-      localStorage.setItem('config', JSON.stringify(newConfig))
-    })
   },
   load: () => {
     const localConfig = JSON.parse(localStorage.getItem('config') ?? '{}')
@@ -33,12 +30,15 @@ export const config: ConfigState = reactive<ConfigState>({
   }),
   addGame: (game: Game) => {
     config.games.push(game)
+    config.save()
   },
   resetGames: () => {
     config.games = defaultConfig.games
+    config.save()
   },
   removeGame: (title: string) => {
     config.games = config.games.filter(game => game.title !== title)
+    config.save()
   },
   ...defaultConfig,
 })
