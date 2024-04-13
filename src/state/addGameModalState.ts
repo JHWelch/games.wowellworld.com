@@ -5,7 +5,7 @@ import { config } from './configState'
 type AddGameModal = {
   show: boolean
   game: Game
-  open: () => void
+  open: (game?: Game) => void
   close: () => void
   reset: () => void
   addGame: () => void
@@ -17,7 +17,12 @@ export const addGameModal: AddGameModal = reactive<AddGameModal>({
     title: '',
     url: '',
   },
-  open: () => addGameModal.show = true,
+  open: (game: Game|undefined = undefined) => {
+    if (game) {
+      addGameModal.game = game
+    }
+    addGameModal.show = true
+  },
   close: () => addGameModal.show = false,
   reset: () => addGameModal.game = {
     title: '',

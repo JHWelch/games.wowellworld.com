@@ -13,6 +13,14 @@ describe('open', () => {
 
     expect(addGameModal.show).toBe(true)
   })
+
+  describe('when the game is provided', () => {
+    it('sets the game', () => {
+      addGameModal.open(game)
+
+      expect(addGameModal.game).toEqual(game)
+    })
+  })
 })
 
 describe('close', () => {
