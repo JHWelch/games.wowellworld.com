@@ -1,6 +1,6 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Game from './Game.vue'
-import { it, expect, describe, beforeAll, vi } from 'vitest'
+import { it, expect, describe, beforeAll } from 'vitest'
 import { CheckIcon } from '@heroicons/vue/24/solid'
 import { today } from '../state/todayState'
 

@@ -1,4 +1,4 @@
-import { reactive, watch } from 'vue'
+import { reactive } from 'vue'
 
 type TodayState = {
   date: string

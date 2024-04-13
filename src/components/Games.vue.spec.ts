@@ -1,7 +1,6 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Games from './Games.vue'
 import { it, expect, describe, beforeEach } from 'vitest'
-import { defaultConfig } from '../config/defaultConfig'
 
 let wrapper: VueWrapper
 
