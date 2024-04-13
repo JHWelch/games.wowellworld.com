@@ -15,6 +15,7 @@ export default defineConfig({
       ],
       registerType: 'autoUpdate',
       manifest: {
+        name: 'Daily Games',
         theme_color: '#171717',
         icons: [
           {
