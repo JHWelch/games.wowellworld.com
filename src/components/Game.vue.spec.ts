@@ -1,8 +1,9 @@
 import { VueWrapper, mount } from '@vue/test-utils'
 import Game from './Game.vue'
-import { it, expect, describe, beforeAll } from 'vitest'
+import { it, expect, describe, beforeAll, afterEach } from 'vitest'
 import { CheckIcon } from '@heroicons/vue/24/solid'
 import { today } from '../state/todayState'
+import { config } from '../state/configState'
 
 let wrapper: VueWrapper
 
@@ -16,6 +17,11 @@ const props = {
   complete: false,
   game,
 }
+
+afterEach(() => {
+  today.reset()
+  config.resetGames()
+})
 
 it('shows all game title', () => {
   const text = mount(Game, { props }).text()
@@ -39,15 +45,15 @@ describe('edit enabled', () => {
     expect(wrapper.find('.handle').exists()).toBe(true)
   })
 
-  // describe('click remove icon on game', () => {
-  //   beforeAll(async () => {
-  //     await wrapper.find('#remove-wordle').trigger('click')
-  //   })
+  describe('click remove icon on game', () => {
+    beforeAll(async () => {
+      await wrapper.find('#remove-wordle').trigger('click')
+    })
 
-  //   it('calls removeGame', () => {
-  //     expect(removeGame).toHaveBeenCalled()
-  //   })
-  // })
+    it('removes game from config', () => {
+      expect(config.games).not.toContain(game)
+    })
+  })
 })
 
 describe('edit disabled', () => {
@@ -61,6 +67,14 @@ describe('edit disabled', () => {
 
   it('does not display sort handles', () => {
     expect(wrapper.findAll('.handle').length).toBe(0)
+  })
+
+  describe('click on game', () => {
+    it('completes the game', () => {
+      wrapper.find('a').trigger('click')
+
+      expect(today.completed).toContain(game.title)
+    })
   })
 })
 
