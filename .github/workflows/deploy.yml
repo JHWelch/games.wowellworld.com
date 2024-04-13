@@ -41,7 +41,7 @@ jobs:
     needs: build
     environment:
       name: github-pages
-      url: ${{steps.deployment.outputs.page_url}}
+      url: 'https://games.wowellworld.com/'
     steps:
       - name: Deploy artifact to GitHub Pages
         uses: actions/deploy-pages@v4
