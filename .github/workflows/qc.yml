@@ -32,7 +32,7 @@ jobs:
     - name: Run Lint
       run: npm run lint
 
-  test-server:
+  test:
     runs-on: ubuntu-latest
 
     steps:
