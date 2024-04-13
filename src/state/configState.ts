@@ -29,6 +29,10 @@ export const config: ConfigState = reactive<ConfigState>({
     games: config.games,
   }),
   addGame: (game: Game) => {
+    if (!game.url.startsWith('http://') && !game.url.startsWith('https://')) {
+      game.url = `https://${game.url}`
+    }
+
     config.games.push(game)
     config.save()
   },

@@ -1,4 +1,4 @@
-import { it, expect, describe, beforeEach } from 'vitest'
+import { it, expect, describe, beforeEach, afterEach } from 'vitest'
 import { defaultConfig } from '../config/defaultConfig'
 import { config } from './configState'
 
@@ -12,6 +12,11 @@ const customGames = [
     'url': 'https://www.nytimes.com/puzzles/connections',
   },
 ]
+
+afterEach(() => {
+  localStorage.removeItem('config')
+  config.resetGames()
+})
 
 describe('init', () => {
   it('loads the default config', () => {
@@ -55,12 +60,27 @@ describe('removeGame', () => {
 })
 
 describe('addGame', () => {
-  it('adds the game to the list', () => {
-    config.init()
+  describe('proper urls passed', () => {
+    it('adds the games to the list', () => {
+      config.init()
 
-    config.addGame({ title: 'New Game', url: 'https://example.com/game' })
+      config.addGame({ title: 'New Game', url: 'https://example.com/game' })
+      config.addGame({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
 
-    expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
+
+      expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
+      expect(config.games).toContainEqual({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
+    })
+  })
+
+  describe('url missing protocol passed', () => {
+    it('adds the games to the list with https:// protocol', () => {
+      config.init()
+
+      config.addGame({ title: 'New Game', url: 'example.com/game' })
+
+      expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
+    })
   })
 })
 
