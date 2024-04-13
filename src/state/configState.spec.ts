@@ -4,10 +4,12 @@ import { config } from './configState'
 
 const customGames = [
   {
+    'id': 'wordle',
     'title': 'Wordle',
     'url': 'https://www.nytimes.com/games/wordle/index.html',
   },
   {
+    'id': 'connections',
     'title': 'Connections',
     'url': 'https://www.nytimes.com/puzzles/connections',
   },

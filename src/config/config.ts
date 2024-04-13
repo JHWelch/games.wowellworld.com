@@ -1,4 +1,5 @@
 export type Game = {
+  id: string
   title: string
   url: string
 }
@@ -9,8 +10,10 @@ export type Config = {
 
 export const isGame = (game: unknown): game is Game => game !== null
   && typeof game === 'object'
+  && 'id' in game
   && 'title' in game
   && 'url' in game
+  && typeof game.id === 'string'
   && typeof game.title === 'string'
   && typeof game.url === 'string'
 

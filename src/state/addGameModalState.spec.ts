@@ -1,11 +1,17 @@
-import { beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { addGameModal } from './addGameModalState'
 import { config } from './configState'
 
 const game = {
+  id: '3ae49ad9-a839-42c3-80fd-c147b839ad1c',
   title: 'Test Game',
   url: 'test-game.com',
 }
+
+afterEach(() => {
+  localStorage.removeItem('config')
+  config.resetGames()
+})
 
 describe('open', () => {
   it('sets show to true', () => {
@@ -46,6 +52,7 @@ describe('addGame', () => {
     addGameModal.addGame()
 
     expect(addGameModal.game).toEqual({
+      id: expect.any(String),
       title: '',
       url: '',
     })
@@ -65,6 +72,7 @@ describe('reset', () => {
     addGameModal.reset()
 
     expect(addGameModal.game).toEqual({
+      id: expect.any(String),
       title: '',
       url: '',
     })

@@ -43,9 +43,12 @@ import { addGameModal } from '../../state/addGameModalState'
                     as="h3"
                     class="text-lg font-semibold leading-6 text-neutral-950"
                   >
-                    Add Game
+                    {{ addGameModal.editing ? 'Edit Game' : 'Add Game' }}
                   </DialogTitle>
-                  <div class="mt-2">
+                  <div
+                    v-if="!addGameModal.editing"
+                    class="mt-2"
+                  >
                     <p class="text-sm text-white">
                       Fill out the form below to add a new game to the list.
                     </p>
@@ -96,7 +99,7 @@ import { addGameModal } from '../../state/addGameModalState'
                   class="inline-flex justify-center w-full px-3 py-2 text-sm font-semibold text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
                   @click="addGameModal.addGame"
                 >
-                  Add Game
+                  {{ addGameModal.editing ? 'Save' : 'Add' }}
                 </button>
                 <button
                   ref="cancelButtonRef"
