@@ -53,3 +53,13 @@ describe('removeGame', () => {
     expect(localConfig.games).not.toContainEqual({ title: 'Wordle', url: 'https://www.nytimes.com/games/wordle/index.html' })
   })
 })
+
+describe('addGame', () => {
+  it('adds the game to the list', () => {
+    config.init()
+
+    config.addGame({ title: 'New Game', url: 'https://example.com/game' })
+
+    expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
+  })
+})
