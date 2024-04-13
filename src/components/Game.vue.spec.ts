@@ -4,6 +4,7 @@ import { it, expect, describe, beforeAll, afterEach } from 'vitest'
 import { CheckIcon } from '@heroicons/vue/24/solid'
 import { today } from '../state/todayState'
 import { config } from '../state/configState'
+import { addGameModal } from '../state/addGameModalState'
 
 let wrapper: VueWrapper
 
@@ -52,6 +53,21 @@ describe('edit enabled', () => {
 
     it('removes game from config', () => {
       expect(config.games).not.toContain(game)
+    })
+  })
+
+  describe('click on game', () => {
+    it('does not complete the game', () => {
+      wrapper.find('a').trigger('click')
+
+      expect(today.completed).not.toContain(game.title)
+    })
+
+    it('edits the game', () => {
+      wrapper.find('a').trigger('click')
+
+      expect(addGameModal.show).toBe(true)
+      expect(addGameModal.game).toEqual(game)
     })
   })
 })

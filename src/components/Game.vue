@@ -5,6 +5,7 @@ import { config } from '../state/configState'
 import { today } from '../state/todayState'
 import { id } from '../utils/strings'
 import { Bars3Icon, CheckIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { addGameModal } from '../state/addGameModalState'
 
 const props = defineProps<{
   edit: boolean
@@ -25,7 +26,7 @@ const complete = computed(() => today.completed.has(props.game.title))
         'border-purple-200': !complete,
         'hover:underline': !complete && !edit,
       }"
-      @click="edit ? undefined : today.completeGame(game.title)"
+      @click="edit ? addGameModal.open(game) : today.completeGame(game.title)"
     >
       <div class="flex items-center space-x-4">
         <Bars3Icon
