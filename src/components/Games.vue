@@ -29,9 +29,7 @@ useSortable(gamesList, config.games, {
         v-for="game in config.games"
         :key="game.title"
         :game="game"
-        :complete="today.completed.has(game.title)"
         :edit="edit"
-        :remove-game="config.removeGame"
       />
 
       <AddGameButton v-if="edit" />
