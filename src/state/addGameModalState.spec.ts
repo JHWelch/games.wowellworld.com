@@ -45,14 +45,16 @@ describe('addGame', () => {
   it('saves the game to the config', () => {
     addGameModal.addGame()
 
-    expect(config.games).toContainEqual(game)
+    expect(config.games).toContainEqual({
+      ...game,
+      id: expect.any(String),
+    })
   })
 
   it('resets the game', () => {
     addGameModal.addGame()
 
     expect(addGameModal.game).toEqual({
-      id: expect.any(String),
       title: '',
       url: '',
     })
@@ -72,7 +74,6 @@ describe('reset', () => {
     addGameModal.reset()
 
     expect(addGameModal.game).toEqual({
-      id: expect.any(String),
       title: '',
       url: '',
     })

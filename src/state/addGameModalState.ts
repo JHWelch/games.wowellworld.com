@@ -1,5 +1,4 @@
 import { reactive } from 'vue'
-import { v4 as uuid } from 'uuid'
 import { Game } from '../config/config'
 import { config } from './configState'
 
@@ -16,7 +15,6 @@ type AddGameModal = {
 export const addGameModal: AddGameModal = reactive<AddGameModal>({
   show: false,
   game: {
-    id: uuid(),
     title: '',
     url: '',
   },
@@ -34,7 +32,6 @@ export const addGameModal: AddGameModal = reactive<AddGameModal>({
   },
   close: () => addGameModal.show = false,
   reset: () => addGameModal.game = {
-    id: uuid(),
     title: '',
     url: '',
   },

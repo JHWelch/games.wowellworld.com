@@ -70,8 +70,16 @@ describe('addGame', () => {
       config.addGame({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
 
 
-      expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
-      expect(config.games).toContainEqual({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
+      expect(config.games).toContainEqual({
+        id: expect.any(String),
+        title: 'New Game',
+        url: 'https://example.com/game',
+      })
+      expect(config.games).toContainEqual({
+        id: expect.any(String),
+        title: 'Unsecure game',
+        url: 'http://example.com/Unsecure',
+      })
     })
   })
 
@@ -81,7 +89,11 @@ describe('addGame', () => {
 
       config.addGame({ title: 'New Game', url: 'example.com/game' })
 
-      expect(config.games).toContainEqual({ title: 'New Game', url: 'https://example.com/game' })
+      expect(config.games).toContainEqual({
+        id: expect.any(String),
+        title: 'New Game',
+        url: 'https://example.com/game',
+      })
     })
   })
 })
