@@ -4,14 +4,14 @@ import { config } from './configState'
 
 const customGames = [
   {
-    'id': 'wordle',
-    'title': 'Wordle',
-    'url': 'https://www.nytimes.com/games/wordle/index.html',
+    id: 'wordle',
+    title: 'Wordle',
+    url: 'https://www.nytimes.com/games/wordle/index.html',
   },
   {
-    'id': 'connections',
-    'title': 'Connections',
-    'url': 'https://www.nytimes.com/puzzles/connections',
+    id: 'connections',
+    title: 'Connections',
+    url: 'https://www.nytimes.com/puzzles/connections',
   },
 ]
 
@@ -68,7 +68,6 @@ describe('addGame', () => {
 
       config.addGame({ title: 'New Game', url: 'https://example.com/game' })
       config.addGame({ title: 'Unsecure game', url: 'http://example.com/Unsecure' })
-
 
       expect(config.games).toContainEqual({
         id: expect.any(String),

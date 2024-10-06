@@ -6,11 +6,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Cabin', 'sans-serif'],
+        sans: ['Cabin', 'sans-serif'],
       },
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
+    require('@tailwindcss/forms'), // eslint-disable-line
   ],
 }

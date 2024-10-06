@@ -5,7 +5,6 @@ import { addGameModal } from '../../state/addGameModalState.ts'
 
 let wrapper: VueWrapper
 
-
 beforeEach(() => {
   const ResizeObserverMock = vi.fn(() => ({
     observe: vi.fn(),

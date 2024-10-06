@@ -73,14 +73,14 @@ describe('games have been customized', () => {
     localStorage.setItem('config', JSON.stringify({
       games: [
         {
-          'id': 'wordle',
-          'title': 'Wordle',
-          'url': 'https://www.nytimes.com/games/wordle/index.html',
+          id: 'wordle',
+          title: 'Wordle',
+          url: 'https://www.nytimes.com/games/wordle/index.html',
         },
         {
-          'id': 'connections',
-          'title': 'Connections',
-          'url': 'https://www.nytimes.com/puzzles/connections',
+          id: 'connections',
+          title: 'Connections',
+          url: 'https://www.nytimes.com/puzzles/connections',
         },
       ],
     }))
